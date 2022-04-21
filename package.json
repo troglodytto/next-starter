@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write src/**/*",
-    "test": "jest"
+    "test": "jest",
+    "docgen": "typedoc --out docs src/**/* --plugin typedoc-plugin-markdown"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
