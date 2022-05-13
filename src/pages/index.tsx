@@ -11,7 +11,7 @@ const HomePage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container flex items-center justify-center w-screen h-screen">
+      <main className="flex items-center justify-center w-screen h-screen">
         <h1 className="text-4xl">
           Welcome to&nbsp;
           <a href="https://nextjs.org" className="title">
