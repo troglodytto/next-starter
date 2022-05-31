@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material';
 import theme from 'material-ui';
 import { WithChildren } from 'next-env';
 import React, { FC } from 'react';
