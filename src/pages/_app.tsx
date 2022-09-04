@@ -7,7 +7,7 @@ const queryClient = new QueryClient({
   mutationCache: new MutationCache({}),
 });
 
-function AllForSportChallenges({ Component, pageProps }: AppProps) {
+function NextApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
@@ -17,4 +17,4 @@ function AllForSportChallenges({ Component, pageProps }: AppProps) {
   );
 }
 
-export default AllForSportChallenges;
+export default NextApp;
