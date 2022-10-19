@@ -1,6 +1,6 @@
-/// <reference types="next" />
 /// <reference types="next/image-types/global" />
 
+import { NextPage } from 'next';
 import { ReactNode } from 'react';
 
 // NOTE: This file should not be edited
@@ -9,3 +9,7 @@ import { ReactNode } from 'react';
 interface WithChildren {
   children: ReactNode;
 }
+
+type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
+  PageLayout?: ComponentType<InsHTMLAttributes<unknown>>;
+};

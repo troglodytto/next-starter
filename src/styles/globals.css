@@ -1,28 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&family=Roboto+Condensed&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+:root {
+  --primary: #0082c3;
+  --primaryLight: #b2e0f7;
+  --primaryDark: #005783;
+  --secondary: #fed766;
+  --orange: #fe4a49;
+  --success: #40c959;
+  --white: #eefcff;
+  --greyLight: #616161;
+  --grey: #414141;
+  --greyThin: #eff1f3;
+  --black: #151519;
 }
 
 * {
   box-sizing: border-box;
 }
 
-@layer components {
-  .title {
-    @apply text-blue-600 font-semibold;
-  }
+*::-webkit-scrollbar {
+  width: 0.5rem;
+  background-color: var(--primaryLight);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primaryDark);
+}
+
+body {
+  font-size: 16px;
+  margin: 0;
+  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: var(--primaryLight);
+
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+}
+
+.nprogress-custom-parent {
+  overflow: hidden;
+  position: relative;
+}
+
+.nprogress-custom-parent #nprogress .bar {
+  position: absolute;
 }

@@ -1,10 +1,14 @@
-import { ThemeProvider } from '@mui/material';
-import theme from 'material-ui';
 import { WithChildren } from 'next-env';
 import React, { FC } from 'react';
+import AppHeader from './header';
 
 const Layout: FC<WithChildren> = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <>
+      <AppHeader />
+      {children}
+    </>
+  );
 };
 
 export default Layout;
