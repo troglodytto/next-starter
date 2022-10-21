@@ -6,8 +6,9 @@ import {
   AnyAction,
 } from '@reduxjs/toolkit';
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';
+import auth from './features/auth.slice';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({ auth });
 
 const hydratingRootReducer = (
   state: ReturnType<typeof rootReducer>,

@@ -7,6 +7,7 @@ import {
   Badge,
   Avatar,
   Input,
+  CircularProgress,
 } from '@mui/material';
 import Link from 'next/link';
 import { FC, MouseEventHandler, ReactNode, useState } from 'react';
@@ -15,11 +16,18 @@ import {
   AiOutlineCodepen,
   AiOutlineNotification,
   AiOutlineCalendar,
+  AiOutlineMessage,
 } from 'react-icons/ai';
 import { RiUser6Line, RiLogoutBoxRLine } from 'react-icons/ri';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
 import styled from 'styled-components';
 import { WithChildren } from 'next-env';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import {
+  loginAction,
+  logoutAction,
+  setOnlineStatusAction,
+} from 'app/store/features/auth.slice';
 
 const AppHeaderNav = styled.nav`
   background-color: ${props => props.theme.primary};
@@ -119,57 +127,73 @@ const DropdownMenu: FC<WithChildren & ButtonProps & DropdownProps> = ({
 };
 
 const AuthHeader: FC = () => {
-  const [{ isAuthorized, profileImage, userName, isOnline }] = useState({
-    isAuthorized: true,
-    profileImage: 'https://picsum.photos/512',
-    userName: 'Ace',
-    isOnline: true,
-  });
+  const { isAuthorized, profileImage, username, isOnline, isLoading } =
+    useAppSelector(state => state.auth);
+
+  const dispatch = useAppDispatch();
+
+  const onLogin = async () => {
+    dispatch(loginAction());
+  };
 
   return isAuthorized ? (
-    <DropdownMenu
-      endIcon={<FiChevronDown />}
-      label={
-        <Avatar
-          src={profileImage}
-          sx={{ backgroundColor: '#b2e0f7', height: 36, width: 36 }}>
-          {userName.charAt(0)}
-        </Avatar>
-      }>
-      <MenuButton fullWidth startIcon={<AiOutlineNotification />}>
-        Online Status
-        <Switch checked={isOnline} sx={{ marginLeft: 'auto' }} />
-      </MenuButton>
-      <MenuButton
-        fullWidth
-        startIcon={
+    <>
+      <Link href="/direct">
+        <IconButton>
           <Badge
-            variant="dot"
-            color="primary"
-            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}>
-            <MdOutlineNotificationsActive />
+            badgeContent={4}
+            color="secondary"
+            overlap="circular"
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+            <AiOutlineMessage color="#b2e0f7" size={24} />
           </Badge>
+        </IconButton>
+      </Link>
+      <DropdownMenu
+        endIcon={<FiChevronDown />}
+        label={
+          <Avatar
+            src={profileImage}
+            sx={{ backgroundColor: '#b2e0f7', height: 36, width: 36 }}>
+            {username.charAt(0)}
+          </Avatar>
         }>
-        Notifications
-      </MenuButton>
-      <Link href="/">
-        <MenuButton fullWidth startIcon={<RiUser6Line />}>
-          Profile
+        <MenuButton
+          fullWidth
+          startIcon={<AiOutlineNotification />}
+          onClick={() => dispatch(setOnlineStatusAction(!isOnline))}>
+          Online Status
+          <Switch checked={isOnline} sx={{ marginLeft: 'auto' }} />
         </MenuButton>
-      </Link>
-      <Link href="/">
-        <MenuButton fullWidth startIcon={<FiSettings />}>
-          Settings
+        <MenuButton fullWidth startIcon={<MdOutlineNotificationsActive />}>
+          Notifications
         </MenuButton>
-      </Link>
+        <Link href="/">
+          <MenuButton fullWidth startIcon={<RiUser6Line />}>
+            Profile
+          </MenuButton>
+        </Link>
+        <Link href="/">
+          <MenuButton fullWidth startIcon={<FiSettings />}>
+            Settings
+          </MenuButton>
+        </Link>
 
-      <MenuButton fullWidth startIcon={<RiLogoutBoxRLine />}>
-        Logout
-      </MenuButton>
-    </DropdownMenu>
+        <MenuButton
+          fullWidth
+          startIcon={<RiLogoutBoxRLine />}
+          onClick={() => dispatch(logoutAction())}>
+          Logout
+        </MenuButton>
+      </DropdownMenu>
+    </>
   ) : (
-    <IconButton color="primary">
-      <RiUser6Line color="#b2e0f7" size={24} />
+    <IconButton color="primary" onClick={onLogin}>
+      {isLoading ? (
+        <CircularProgress style={{ color: '#b2e0f7' }} size={24} />
+      ) : (
+        <RiUser6Line color="#b2e0f7" size={24} />
+      )}
     </IconButton>
   );
 };
@@ -184,7 +208,7 @@ const AppHeader: FC = () => {
       </Link>
 
       <DropdownMenu endIcon={<FiChevronDown />} label="Dropdown Menu">
-        <Link href="/dropdown/item">
+        <Link href="/second">
           <MenuButton fullWidth startIcon={<AiOutlineCalendar />}>
             Dropdown Item
           </MenuButton>

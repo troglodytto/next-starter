@@ -13,3 +13,12 @@ interface WithChildren {
 type NextPageWithLayout<T = Record<string, unknown>> = NextPage<T> & {
   PageLayout?: ComponentType<InsHTMLAttributes<unknown>>;
 };
+
+interface AuthState {
+  email: string;
+  username: string;
+  profileImage: string;
+  isAuthorized: boolean;
+  isOnline: boolean;
+  isLoading: boolean;
+}
