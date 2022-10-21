@@ -1,10 +1,11 @@
-import APIS from 'app/services/urls';
-import axios from 'axios';
 import { NextApiHandler } from 'next';
+import httpClient from 'app/services/serverApiClient';
 
 const getUserProfile: NextApiHandler = async (req, res) => {
   try {
-    const { data } = await axios.get(APIS.PROFILE, { headers: req.headers });
+    const { data } = await httpClient.get('/user/profile', {
+      headers: req.headers,
+    });
 
     const {
       email,

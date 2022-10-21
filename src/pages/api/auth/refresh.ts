@@ -1,13 +1,12 @@
-import APIS from 'app/services/urls';
-import axios from 'axios';
 import { NextApiHandler } from 'next';
 import { parseCookies, setCookie } from 'nookies';
+import httpClient from 'app/services/serverApiClient';
 
 const refreshToken: NextApiHandler = async (req, res) => {
   try {
     const { refreshToken: refresh } = parseCookies({ req });
 
-    const { data } = await axios.post(APIS.REFRESH, { refresh });
+    const { data } = await httpClient.post('/auth/refresh', { refresh });
 
     const { access: accessToken, max_age: maxAge } = data;
 

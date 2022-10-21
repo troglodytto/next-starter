@@ -2,12 +2,11 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { parseCookies, setCookie } from 'nookies';
-import axios from 'axios';
-import APIS from 'app/services/urls';
 import { initializeAuthState } from 'app/store/features/auth.slice';
 import { useAppDispatch } from 'app/hooks';
 import { useEffect } from 'react';
 import { AuthState } from 'next-env';
+import httpClient from 'app/services/serverApiClient';
 
 interface IHomePage {
   auth: Partial<AuthState>;
@@ -51,7 +50,7 @@ HomePage.getInitialProps = async ctx => {
   if (token) {
     const {
       data: { access: accessToken, max_age: maxAge },
-    } = await axios.post(APIS.REFRESH, { refresh: token });
+    } = await httpClient.post('/auth/refresh', { refresh: token });
 
     setCookie(ctx, 'accessToken', accessToken, {
       path: '/',
@@ -61,7 +60,7 @@ HomePage.getInitialProps = async ctx => {
       maxAge,
     });
 
-    const { data } = await axios.get(APIS.PROFILE, {
+    const { data } = await httpClient.get('user/profile', {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 

@@ -1,12 +1,11 @@
-import APIS from 'app/services/urls';
-import axios from 'axios';
 import { NextApiHandler } from 'next';
 import { setCookie } from 'nookies';
+import httpClient from 'app/services/serverApiClient';
 
 const login: NextApiHandler = async (req, res) => {
   const { idToken } = req.body;
   try {
-    const { data } = await axios.post(APIS.LOGIN, {
+    const { data } = await httpClient.post('/auth/login', {
       id_token: idToken,
     });
 

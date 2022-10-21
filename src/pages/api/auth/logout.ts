@@ -1,11 +1,12 @@
-import APIS from 'app/services/urls';
-import axios from 'axios';
 import { NextApiHandler } from 'next';
 import { destroyCookie } from 'nookies';
+import httpClient from 'app/services/serverApiClient';
 
 const logout: NextApiHandler = async (req, res) => {
   try {
-    const { data } = await axios.get(APIS.LOGOUT, { headers: req.headers });
+    const { data } = await httpClient.get('/auth/logout', {
+      headers: req.headers,
+    });
 
     destroyCookie({ res }, 'refreshToken', { path: '/' });
     destroyCookie({ res }, 'accessToken', { path: '/' });
